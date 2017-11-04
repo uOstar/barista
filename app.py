@@ -1,13 +1,16 @@
 from threads import *
 
-def cmd_help():
-    print('\nhelp')
-    print('lists availible commands')
+def cmd_help(args):
+    print('run')
+    print('\tlaunches a control thread and all associated services')
 
+    print('stop')
+    print('\tkills control thread and all associated services')
+def cmd_update(args):
 
-def cmd_run():
-    active_thread = ContolThread()
-    active_thread.run()
+def cmd_compile(args):
+
+def cmd_test(args):
 
 
 print('\n888888b.                 d8b        888            ')
@@ -19,15 +22,25 @@ print('888    888.d888888888    888"Y8888b.888   .d888888   ')
 print('888   d88P888  888888    888     X88Y88b. 888  888   ')
 print('8888888P" "Y888888888    888 88888P\' "Y888"Y888888\n')
 
-while(True):
-    line = raw_input('>>> ')
+while(True)
+    line = input('>>>')
 
     cmd = line.split(' ')[0]
     args = line.split(' ')[1:]
 
     if cmd == 'help':
-        cmd_help()
+        cmd_help(args)
     elif cmd == 'run':
-        cmd_run()
+        cmd_run(args)
+    elif cmd == 'stop':
+        cmd_stop(args)
+    elif cmd == 'update':
+        cmd_update(args)
+    elif cmd == 'compile':
+        cmd_compile(args)
+    elif cmd == 'reset':
+        cmd_compile(args)
+    elif cmd == 'test':
+        cmd_test(args)
     else:
         exec(line)
