@@ -3,6 +3,7 @@ GEM
   specs:
     aasm (4.12.3)
       concurrent-ruby (~> 1.0)
+    beaglebone (1.2.7)
     concurrent-ruby (1.0.5)
 
 PLATFORMS
@@ -10,6 +11,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  beaglebone
 
 RUBY VERSION
    ruby 2.3.1p112
