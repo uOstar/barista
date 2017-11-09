@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    aasm (4.12.3)
+      concurrent-ruby (~> 1.0)
+    concurrent-ruby (1.0.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  aasm
+
+RUBY VERSION
+   ruby 2.3.1p112
+
+BUNDLED WITH
+   1.16.0
