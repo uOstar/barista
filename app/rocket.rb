@@ -19,16 +19,16 @@ class Rocket
 
     state :descent_main
     event :deploy_main do
-      transitions from: :recovery_one, to: :recovery_two
+      transitions from: :recovery_one, to: :recovery_two, before: :eject_parachute
     end
 
     event :touchdown do
-      transitions from: [:descent_drogue, :descent_main], to: :ground
+      transitions from: [:descent_drogue, :descent_main], to: :ground,
     end
 
     state :idle
     event :sleep do
-      transitions from: :ground, to: :power_saver
+      transitions from: :ground, to: :power_saver,
     end
   end
 end
