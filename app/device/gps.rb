@@ -1,3 +1,5 @@
+require 'beaglebone'
+
 class Device::GPS
   include Beaglebone
 

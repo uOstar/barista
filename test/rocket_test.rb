@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require '../app/rocket'
+require './app/rocket'
 
 class RocketTest < MiniTest::Unit::TestCase
 

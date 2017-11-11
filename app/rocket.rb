@@ -1,3 +1,5 @@
+require 'aasm'
+
 class Rocket
   include AASM
 
