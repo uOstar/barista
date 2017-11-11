@@ -1,12 +1,13 @@
 require 'minitest/autorun'
+require '../app/rocket'
 
 class RocketTest < MiniTest::Unit::TestCase
 
-  setup do
+  def setup
     @rocket = Rocket.new
   end
 
-  test 'rocket initial state is ground' do
-    assert_equal 'ground', rocket.state
+  def rocket_initial_state_is_ground
+    assert_equal "ground", @rocket.state
   end
 end
