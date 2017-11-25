@@ -3,7 +3,7 @@ require 'beaglebone'
 class Device::Gyro
   include Beaglebone
 
-  I2C_ADDR = 0x53
+  I2C_ADDR = 0x68
 
   def read
     puts read_i2c(6, 0x1D)
