@@ -1,11 +1,11 @@
 require 'beaglebone'
-
-class Device::GPS
+module Device
+  class GPS
   include Beaglebone
   def intiliaze()
+    gps = UARTDevice.new(:UART1, 9600)
   end
 
-  gps = UARTDevice.new(:UART1, 9600)
    
   def gps_read
     nmea = gps.readline
@@ -40,16 +40,17 @@ class Device::GPS
       h_dilution = n2[8]
       alt = n2[9]
       a_sea_level = n2[11]
-
+    end
   end
 
   def l_format(l,minutes,direction)
     l_return = l+(minutes/60)
     if direction=='N' or direction=='E'
-      pass
-    else:
+      #do nothing
+    else
       l_return = -l_return
     return l_return
-
+    end
   end
+end
 end
