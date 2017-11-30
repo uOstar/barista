@@ -6,9 +6,9 @@ module Device
     gps = UARTDevice.new(:UART1, 9600)
   end
 
-   
   def gps_read
     nmea = gps.readline
+    return nmea
   end
 
   def gps_parse(nmea)
@@ -40,6 +40,7 @@ module Device
       h_dilution = n2[8]
       alt = n2[9]
       a_sea_level = n2[11]
+      return fix_state
     end
   end
 
