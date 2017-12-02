@@ -15,13 +15,13 @@ module Device
     end
 
     def sleep
-      new_register = read_i2c(1, 0x3E) | 0b01000000
-      write(0x3E, new_register)
-    end
+      new_register = read_i2c(1, 0x2D) |0b00000111 #written as D7->D0
+      write(0x2D, new_register)
+    end:
 
     def wake
-      new_register = read_i2c(1, 0x3E) | 0b01000000
-      write(0x3E, new_register)
+      new_register = read_i2c(1, 0x2D) |0b00000011
+      write(0x2D, new_register)
     end
 
     private
