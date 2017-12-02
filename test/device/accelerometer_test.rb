@@ -1,9 +1,10 @@
 require 'minitest/autorun'
 require_relative '../app/device/imu'
 
-class ImuTest < MiniTest::Test
+class AccelerometerTest < MiniTest::Test
 
   def setup
+    @accelerometer = Device::Accelerometer.new
   end
 
   def test_read
