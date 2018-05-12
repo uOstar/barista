@@ -1,6 +1,7 @@
 *.log
 .DS_store
 *.pyc
+*swp
 *.cache
 *__pycache__/
 *.pytest_cache
