@@ -38,3 +38,6 @@ class I2C(object):
 
     def read_block(self,register, number_to_read):
         return self.smbus.read_i2c_block_data(self.device_address, register, number_to_read)
+
+    def byte_array_to_float32(self,array):
+        return np.fromiter(array[::-1], dtype=np.uint8).view('<f4')
