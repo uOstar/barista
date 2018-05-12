@@ -1,14 +1,12 @@
 from app.utils.i2c import I2C
-from time import sleep
-from time import time
+from time import sleep, time
 import numpy as np
 import logging
-from smbus2 import SMBus #temp
 
 
 ADDRESS = 0x77
-#I2C address byte
 ADDR_BYTE = 0xEE
+
 
 VALID_COMMANDS = {
     'read_all':{'command' : 0x20, 'length' : 9},
@@ -30,11 +28,10 @@ VALID_COMMANDS = {
 
 class IMU(object):
 
+
     def __init__(self):
         self.i2c = I2C(1, ADDRESS)
         self.read_length = 0
-        # reset sensor settings
-        # self.i2c.write_byte(addr_byte, 0xE0)
 
 
     #sample sensor read functions
@@ -61,7 +58,7 @@ class IMU(object):
 
     def read(self):
         self.i2c.write_byte(ADDR_BYTE, 0x43)
-        data = self.i2c.read_block(0x00, self.read_length) ##TODO: maybe???
+        data = self.i2c.read_block(0x00, self.read_length)
         return data
 
 
