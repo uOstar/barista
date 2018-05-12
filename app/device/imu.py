@@ -8,60 +8,67 @@ from smbus2 import SMBus #temp
 
 ADDRESS = 0x77
 #I2C address byte
-addr_byte = 0xEE
-# cmd
-read_all = 0x20
-read_gyro = 0x21
-read_accel = 0x22
-read_compass = 0x23
-read_temp_c = 0x2B
-read_temp_f = 0x2C
+ADDR_BYTE = 0xEE
 
-read_all_filtered = 0x25
-read_gyro_filtered = 0x26
-read_accel_filtered = 0x27
-read_compass_filtered = 0x28
-read_linear_accel = 0x29
-read_gyro_filtered_rad_s = 0x26
-read_accel_filtered_g = 0x31
+VALID_COMMANDS = {
+    'read_all':{'command' : 0x20, 'length' : 9},
+    'read_gyro':{ 'command':0x21, 'length':3},
+    'read_accel' :{ 'command':0x22, 'length':3},
+    'read_compass' :{ 'command':0x23, 'length':3},
+    'read_temp_c' :{ 'command':0x2B, 'length':1},
+    'read_temp_f' :{ 'command':0x2C, 'length':3},
+    'read_all_filtered' :{ 'command':0x25, 'length':9},
+    'read_gyro_filtered' :{ 'command':0x26, 'length':3},
+    'read_accel_filtered' :{ 'command':0x27, 'length':3},
+    'read_compass_filtered' :{ 'command':0x28, 'length':3},
+    'read_linear_accel' :{ 'command':0x29, 'length':3},
+    'read_gyro_filtered_rad_s' :{ 'command':0x30, 'length':3},
+    'read_accel_filtered_g' :{ 'command': 0x31, 'length':3},
+    'read_orientation_euler':{'command': 0x01, 'length':3},
+}
 
 
-class IMUs(object):
-
+class IMU(object):
 
     def __init__(self):
         self.i2c = I2C(1, ADDRESS)
+        self.read_length = 0
         # reset sensor settings
         # self.i2c.write_byte(addr_byte, 0xE0)
 
 
-    def get_slave_status(self):
-        self.i2c. write_byte(addr_byte, 0x41)
-        return self.i2c. read_byte(addr_byte)
-
-
-    def send_command(self,command,param=0x00):
-        self.i2c.write_byte(addr_byte, 0x42)
-        self.i2c.write_byte(command, param)
-
-
-    #@staticmethod
-    def read(self,bytes):
-        self.i2c.write_byte(addr_byte, 0x43)
-        data = self.i2c.read_block(0x00, bytes) ##TODO: maybe???
-        return data
-
-
     #sample sensor read functions
     def read_temp_c(self):
-        self.send_command(0x2B)
-        return float(self.i2c.byte_array_to_float32(self.read(4)))
+        self.send_command('read_temp_c')
+        return self.parse_byte_array(self.read())
+
+
+    def read_orientation_euler(self):
+        self.send_command('read_orientation_euler')
+        return self.parse_byte_array(self.read())
 
 
     def read_accel_filtered(self):
-        self.send_command(0x27)
-        return self.read(12)
+        self.send_command('read_accel_filtered')
+        return self.parse_byte_array(self.read())
 
 
-if __name__ == '__main__':
-    #do something
+    def send_command(self,command,param=0x00):
+        self.i2c.write_byte(ADDR_BYTE, 0x42)
+        self.i2c.write_byte(VALID_COMMANDS[command]['command'], param)
+        self.read_length = VALID_COMMANDS[command]['length']*4
+
+
+    def read(self):
+        self.i2c.write_byte(ADDR_BYTE, 0x43)
+        data = self.i2c.read_block(0x00, self.read_length) ##TODO: maybe???
+        return data
+
+
+    def parse_byte_array(self,array):
+        a = []
+        for i in range(self.read_length/4):
+            a.append(array[i*4:(i*4)+4])
+        for item in a:
+            a[a.index(item)] = float(self.i2c.byte_array_to_float32(item))
+        return a
