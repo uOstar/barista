@@ -69,7 +69,7 @@ class IMU(object):
 
     def sleep(self):
         #TODO: implement me
-
+        pass
 
     def parse_byte_array(self,array):
         a = []
