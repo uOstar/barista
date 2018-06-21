@@ -1,14 +1,16 @@
 import pytest
 import time
-import numpy
+import numpy as np
 from app.rocket.kinetics import Kinetics
 
 from test.fixtures.dummy_device_factory import DummyDeviceFactory
+
 
 @pytest.fixture
 def kinetics():
     device_factory = DummyDeviceFactory()
     return Kinetics(DummyDeviceFactory())
+
 
 def test_start_asynchonously_updates_acceleration(kinetics):
     kinetics.activate()
@@ -18,6 +20,7 @@ def test_start_asynchonously_updates_acceleration(kinetics):
     kinetics.deactivate()
     assert initial_acceleration != final_acceleration
 
+
 def test_start_asynchonously_updates_velocity(kinetics):
     kinetics.activate()
     initial_velocity = kinetics.velocity()
@@ -26,6 +29,7 @@ def test_start_asynchonously_updates_velocity(kinetics):
     kinetics.deactivate()
     assert initial_velocity != final_velocity
 
+
 def test_start_asynchonously_updates_position(kinetics):
     kinetics.activate()
     initial_position = kinetics.position()
@@ -33,3 +37,13 @@ def test_start_asynchonously_updates_position(kinetics):
     final_position = kinetics.position()
     kinetics.deactivate()
     assert initial_position != final_position
+
+def test_matrix_conversion(kinetics):
+    dict = {'x': 1, 'y': 2, 'z': 3 }
+    matrix = kinetics.dict_to_matrix(dict)
+    assert np.array_equal(matrix, np.array([[1],
+                                            [2],
+                                            [3]]))
+
+def test_apogee_prediction_zero_acceleration(kinetics):
+    kinetics.predicted_apogee() # TODO: finish me
