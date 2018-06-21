@@ -125,8 +125,6 @@ class Rocket(object):
             self.radio_msg = {
                 'action': radio_receive['action'].encode('ascii'),
                 'data': radio_receive['data'].encode('ascii')
-            if self.radio_msg['action'] == 'tare_imu':
-                self.device_factory.imu.set_axis_directions_with_tare()
             }
 
 
