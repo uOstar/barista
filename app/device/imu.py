@@ -25,7 +25,7 @@ class IMU(object):
         self.set_axis_directions_with_tare()
 
     def set_axis_directions_with_tare(self):
-        axis_direction = 0x04
+        axis_direction = 0b00000101
         self.send_command('set_axis_directions', axis_direction)
         self.send_command('tare_current_orientation')
 
